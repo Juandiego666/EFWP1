@@ -1,0 +1,48 @@
+@model IEnumerable<EFWP1.Models.Categoria>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1 class="display-4">Index</h1>
+
+<div class="mb-4">
+    <a asp-controller="Categorias" asp-action="Create" class="btn btn-primary me-2">Crear categoría</a>
+    <a asp-controller="Productos" asp-action="Create" class="btn btn-success">Crear producto</a>
+</div>
+
+<h2>Categorías</h2>
+
+<table class="table mt-3">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th>Productos</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Nombre</td>
+            <td>
+                @if (item.Productos != null && item.Productos.Any())
+                {
+                    <ul class="list-unstyled mb-0">
+                        @foreach (var prod in item.Productos)
+                        {
+                            <li>• @prod.Nombre ($ @prod.Precio.ToString("N2"))</li>
+                        }
+                    </ul>
+                }
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-primary btn-sm me-1">Editar</a>
+                <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger btn-sm">Eliminar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
